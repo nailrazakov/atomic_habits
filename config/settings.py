@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'users',
     'habits',
+    "corsheaders",
+    "drf_yasg",
 
 ]
 
@@ -45,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -145,6 +148,12 @@ if CACHE_ENABLED:
             'LOCATION': os.getenv('LOCATION'),
         }
     }
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    ]
 
 # Настройки для Celery
 
