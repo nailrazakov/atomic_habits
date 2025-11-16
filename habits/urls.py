@@ -8,5 +8,4 @@ router = SimpleRouter()
 router.register("", HabitViewSet)
 
 urlpatterns = []
-
 urlpatterns += router.urls

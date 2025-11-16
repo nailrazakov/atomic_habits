@@ -13,7 +13,7 @@ class HabitViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         habit = serializer.save()
-        habit.user = self.request.user
+        habit.owner = self.request.user
         habit.save()
 
     def get_permissions(self):
@@ -27,6 +27,6 @@ class HabitViewSet(ModelViewSet):
         """ Возвращает список привычек для текущего пользователя и все опубликованные привычки. """
 
         user = self.request.user
-        user_habits = Habit.objects.filter(user=user)
+        user_habits = Habit.objects.filter(owner=user)
         published_habits = Habit.objects.filter(is_published=True)
         return user_habits | published_habits
