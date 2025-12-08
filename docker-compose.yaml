@@ -25,7 +25,7 @@ services:
 
   backend:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py migrate && python manage.py collectstatic -c --no-input && python manage.py runserver 0.0.0.0:8000"
     env_file: .env
     environment:
       POSTGRES_HOST: db
@@ -37,6 +37,20 @@ services:
         condition: service_healthy
     ports:
       - "8080:8000"
+    volumes:
+      - django_static:/app/static/
+
+  web:
+    image: nginx:1.19.3
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_started
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - django_static:/usr/share/nginx/html/static/
 
 volumes:
   pg_data:
+  django_static:
