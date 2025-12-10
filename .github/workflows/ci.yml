@@ -59,8 +59,6 @@ jobs:
           DATABASE_USER: ${{ secrets.DATABASE_USER }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_API_VERSION: ${{ secrets.STRIPE_API_VERSION }}
           REDIS_HOST: localhost
           REDIS_PORT: 6379
           REDIS_DB: 0
@@ -80,26 +78,25 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1 || mkdir -p /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1 && cd /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1
+            cd /home/${{ secrets.SERVER_USER }}/app/PythonProject35.2 || mkdir -p /home/${{ secrets.SERVER_USER }}/app/PythonProject35.2 && cd /home/${{ secrets.SERVER_USER }}/app/PythonProject35.2
             cat << 'EOF' > .env
             SECRET_KEY=${{ secrets.SECRET_KEY }}
-            DATABASE_NAME=${{ secrets.DATABASE_NAME }}
-            DATABASE_USER=${{ secrets.DATABASE_USER }}
-            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
-            DATABASE_HOST=${{ secrets.DATABASE_HOST }}
-            DATABASE_PORT=${{ secrets.DATABASE_PORT }}
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+            POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
             
             # Django
             DEBUG=True
             
-            # Stripe
-            STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
-            STRIPE_API_VERSION=${{ secrets.STRIPE_API_VERSION }}
-            
             # Redis
-            REDIS_HOST=${{ secrets.REDIS_HOST }}
-            REDIS_PORT=${{ secrets.REDIS_PORT }}
-            REDIS_DB=${{ secrets.REDIS_DB }}
+            REDIS_URL=${{ secrets.REDIS_URL }}
+            LOCATION=${{ secrets.LOCATION }}
+            
+            
+            CELERY_BROKER_URL=${{ secrets.CELERY_BROKER_URL }}
+            CELERY_RESULT_BACKEND=${{ secrets.CELERY_RESULT_BACKEND }}
 
             EOF
             
