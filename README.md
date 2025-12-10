@@ -23,3 +23,7 @@
 7 - В терминале запустите:
 
 celery worker: 'celery -A config worker -l INFO' или для Windows: 'celery -A config worker -l INFO -P eventlet' celery beat : ' celery -A config beat -l INFO'
+
+
+для сборки наберите команду
+sudo docker compose up -d --build
